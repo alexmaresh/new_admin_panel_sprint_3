@@ -1,8 +1,9 @@
-django==4.0.4
-uwsgi==2.0.20
 flake8==4.0
 python-dotenv==0.21.1
 psycopg2-binary==2.9.5
+python-dotenv==0.21.1
+pyyaml==6.0
 
 elasticsearch~=7.17.9
 pydantic~=1.10.5
+

@@ -2,6 +2,7 @@ import abc
 from typing import Any, Optional
 import json
 import os
+from config import app_config
 
 class BaseStorage:
     @abc.abstractmethod
@@ -16,8 +17,8 @@ class BaseStorage:
 
 
 class JsonFileStorage(BaseStorage):
-    def __init__(self, file_path: Optional[str] = None):
-        self.file_path = file_path
+    def __init__(self):
+        self.file_path = app_config.storage_file_path
 
     def check_present(self):
         try:
