@@ -7,6 +7,7 @@ from transform import transformer
 
 logging.basicConfig(filename=app_config.log_path, level=logging.DEBUG)
 
+
 def updater(pg, es):
     for data in pg.pop_next_to_update():
         es.add_to_pack(*transformer(data))
@@ -45,6 +46,7 @@ def сontinious_interaction():
         logging.info(f'All files are up to date! Waiting {app_config.await_time} sec')
         time.sleep(app_config.await_time)
         pg.tables = {'filmworks': True, 'genres': True, 'persons': True}
+
 
 if __name__ == '__main__':
     сontinious_interaction()

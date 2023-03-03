@@ -9,6 +9,7 @@ from settings import sql_queries
 from backoff import backoff
 import json
 
+
 class PstgrsOperations:
     def __init__(self):
         self.connection = psycopg2.connect(**dsl)
@@ -19,7 +20,7 @@ class PstgrsOperations:
         self.tables = {'filmworks': True, 'genres': True, 'persons': True}
 
     @backoff()
-    def get_data(self, query: str, params = None, size = 10):
+    def get_data(self, query: str, params=None, size=10):
         logging.info("PstgrsOperations: get data")
         '''Get some data from PG: query, params and size'''
         if params is None:
@@ -95,8 +96,8 @@ class PstgrsOperations:
             self._push_genres()
         self.tables['genres'] = len(self.rows) != 0
 
-#На самом деле __del__ всегда вызывается по завершении работы интерпретатора.
-#Пруф: https://habr.com/ru/post/186608/comments/#comment_6492862
+    # На самом деле __del__ всегда вызывается по завершении работы интерпретатора.
+    # Пруф: https://habr.com/ru/post/186608/comments/#comment_6492862
     def __del__(self):
         self.connection.close()
 
@@ -140,7 +141,3 @@ class ElstcsrchOperations:
 
     def __del__(self):
         self.connection.close()
-
-
-
-
