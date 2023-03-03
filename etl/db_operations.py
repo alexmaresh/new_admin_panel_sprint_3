@@ -70,14 +70,14 @@ class PstgrsOperations:
     def _push_persons(self):
         last_time = self.rows[-1][1]
         person_ids = tuple([x[0] for x in self.rows])
-        self.get_data(sql_queries.sql_push_persons, params=(person_ids,))
+        self.get_data(sql_queries.sql_push_persons, params=(person_ids, pg_config.limit_query, ))
         self.ids_to_update = self.rows
         self.state.set_state('persons', last_time)
 
     def _push_genres(self):
         last_time = self.rows[-1][1]
         genres_ids = tuple([x[0] for x in self.rows])
-        self.get_data(sql_queries.sql_push_genres, params=(genres_ids,))
+        self.get_data(sql_queries.sql_push_genres, params=(genres_ids, pg_config.limit_query,))
         self.ids_to_update = self.rows
         self.state.set_state('genres', last_time)
 
@@ -125,11 +125,11 @@ class ElstcsrchOperations:
         body = '\n'.join(self.pack)
         res = self.connection.bulk(body=body, index=movie_idx, params={'filter_path': 'items.*.error'})
         if not res:
-            logging.info(f"Pack of {len(self.pack)} added")
+            logging.info("Pack of %s is added" % len(self.pack))
             self.pack.clear()
             self.state.set_state('filmworks', self.last_time)
         else:
-            print(res)
+            logging.error(res)
 
     def check_idx(self, idx):
         return self.connection.indices.exists(index=idx)

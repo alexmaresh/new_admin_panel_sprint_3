@@ -1,5 +1,6 @@
 import abc
-from typing import Any, Optional
+import logging
+from typing import Any
 import json
 import os
 from config import app_config
@@ -50,8 +51,9 @@ class JsonFileStorage(BaseStorage):
                     return {}
                 try:
                     return json.loads(file_data)
-                except Exception:
-                    return None
+                except Exception as e:
+                    logging.exception(e)
+
 
 
 class State:

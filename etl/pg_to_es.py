@@ -32,7 +32,7 @@ def сontinious_interaction():
     for i, f in idx_files.items():
         if not es.check_idx(i):
             result = es.create_idxs(i, f)
-            logging.info(f'Created index: {result}')
+            logging.info('Created index: %s' % result)
 
     while True:
         while pg.is_not_complete():
@@ -43,7 +43,7 @@ def сontinious_interaction():
             pg.check_genres_updates()
             updater(pg=pg, es=es)
 
-        logging.info(f'All files are up to date! Waiting {app_config.await_time} sec')
+        logging.info('All files are up to date! Waiting %s sec' % app_config.await_time)
         time.sleep(app_config.await_time)
         pg.tables = {'filmworks': True, 'genres': True, 'persons': True}
 

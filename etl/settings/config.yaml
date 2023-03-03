@@ -14,6 +14,7 @@ postgres:
   DB_PORT: 5432
   options: -c search_path=content
   bulk_factor : 100
+  limit_query: 1000
 
 elasticsearch:
   discovery.type: single-node

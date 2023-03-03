@@ -7,7 +7,7 @@ sql_push_persons = '''SELECT fw.id, fw.modified
                     LEFT JOIN content.person_film_work pfw ON pfw.film_work_id = fw.id
                     WHERE pfw.person_id IN %s
                     ORDER BY fw.modified
-                    LIMIT 1000;'''
+                    LIMIT %s;'''
 
 sql_check_persons = '''SELECT id, modified FROM content.person WHERE person.modified > %s
            order by modified DESC'''
@@ -17,7 +17,7 @@ sql_push_genres = '''SELECT fw.id, fw.modified
                             LEFT JOIN content.genre_film_work pfw ON pfw.film_work_id = fw.id
                             WHERE pfw.genre_id IN %s
                             ORDER BY fw.modified
-                            LIMIT 1000;'''
+                            LIMIT %s;'''
 
 sql_check_genres = '''SELECT id, modified FROM content.genre WHERE genre.modified > %s
             order by modified DESC'''

@@ -32,6 +32,7 @@ class PGSettings(BaseModel):
     DB_PORT: int
     options: str
     bulk_factor: int
+    limit_query: int
 
 
 @dataclass
