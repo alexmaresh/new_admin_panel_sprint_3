@@ -67,33 +67,29 @@ class PstgrsOperations:
                 self.last_time = updated_at
             yield self.rows
 
-    def _push_persons(self):
+    def _push(self, table_name):
         last_time = self.rows[-1][1]
-        person_ids = tuple([x[0] for x in self.rows])
-        self.get_data(sql_queries.sql_push_persons, params=(person_ids, pg_config.limit_query, ))
+        table_name_ids = tuple([x[0] for x in self.rows])
+        if table_name == 'genres':
+            self.get_data(sql_queries.sql_push_genres, params=(table_name_ids, pg_config.limit_query,))
+        if table_name == 'persons':
+            self.get_data(sql_queries.sql_push_persons, params=(table_name_ids, pg_config.limit_query,))
         self.ids_to_update = self.rows
-        self.state.set_state('persons', last_time)
-
-    def _push_genres(self):
-        last_time = self.rows[-1][1]
-        genres_ids = tuple([x[0] for x in self.rows])
-        self.get_data(sql_queries.sql_push_genres, params=(genres_ids, pg_config.limit_query,))
-        self.ids_to_update = self.rows
-        self.state.set_state('genres', last_time)
+        self.state.set_state(table_name, last_time)
 
     def check_persons_updates(self):
-        persons_last_time = self.state.get_state('p')
+        persons_last_time = self.state.get_state('persons')
         self.get_data(sql_queries.sql_check_persons, params=(persons_last_time,))
         if len(self.rows) != 0:
-            self._push_persons()
+            self._push('persons')
         self.tables['persons'] = len(self.rows) != 0
 
     def check_genres_updates(self):
-        genres_last_time = self.state.get_state('g')
+        genres_last_time = self.state.get_state('genres')
         self.get_data(sql_queries.sql_check_genres, params=(genres_last_time,))
 
         if len(self.rows) != 0:
-            self._push_genres()
+            self._push('genres')
         self.tables['genres'] = len(self.rows) != 0
 
     # На самом деле __del__ всегда вызывается по завершении работы интерпретатора.

@@ -24,7 +24,11 @@ sql_check_genres = '''SELECT id, modified FROM content.genre WHERE genre.modifie
 
 sql_get_new_ids = '''SELECT id, modified from content.film_work WHERE film_work.modified > %s ORDER BY modified;'''
 
-sql_get_film = '''SELECT
+#Я понимаю, что возможно стоило бы сделать иначе, но в учебных материалах такой подход освещался как один из возможных.
+#Если переделать тут запрос, придется переделать еще и весь трансформ, модельки и пр.
+#Учитывая что у нас была возможность выбора как делать - так линейно или через один сложный вопрос - хотелось бы для сдачи задания все-таки оставить так.
+#Я только учусь и переделать все так быстро не смогу (
+sql_get_film='''SELECT
             fw.id as fw_id,
             fw.title,
             fw.description,
