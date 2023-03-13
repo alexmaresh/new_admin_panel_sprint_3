@@ -1,2 +1,1 @@
-# ETL + postgres + admin panel 
-# Dockerized
+#ETL + postgres + admin panel 
